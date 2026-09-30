@@ -1,0 +1,34 @@
+[project]
+name = "ie313-laptop-price-prediction"
+version = "1.0.0"
+description = "Đồ án môn học: Phân tích và Trực quan dữ liệu (IE313) - Trường Đại học Công nghệ Thông tin (UIT)"
+readme = "README.md"
+authors = [
+    { name = "Trần Ngọc Tâm", email = "tranngoctam13a@gmail.com" },
+    { name = "Hồ Thiên Phúc", email = "hothienphuc1999@gmail.com" },
+    { name = "Chu Văn Thơm", email = "vanthom04.dev@gmail.com" },
+]
+requires-python = ">=3.12"
+dependencies = [
+    "jupyter>=1.1.1",
+    "matplotlib>=3.11.2",
+    "numpy>=2.5.3",
+    "pandas>=3.0.6",
+    "scikit-learn>=1.9.1",
+    "scipy>=1.18.1",
+    "seaborn>=0.13.2",
+    "statsmodels>=0.15.0",
+]
+
+[dependency-groups]
+dev = ["ruff>=0.16.9"]
+
+[tool.uv]
+package = false
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]
