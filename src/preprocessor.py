@@ -1,7 +1,6 @@
 import pandas as pd
 from sklearn.preprocessing import StandardScaler
 
-
 def clean_and_preprocess(df):
     """Hàm làm sạch, Điền khuyết (Median/Mode), One-Hot Encoding và chuẩn hóa Z-score"""
     print("Đang tiến hành tiền xử lý dữ liệu (Áp dụng Median/Mode cho NaN)...")
@@ -11,11 +10,9 @@ def clean_and_preprocess(df):
     df = df.drop(columns=[col for col in cols_to_drop if col in df.columns], errors='ignore')
 
     # 2. Làm sạch cột 'Ram' và 'Weight' để chuyển thành số
-    # Dùng float tạm thời để không bị lỗi nếu ô đó đang là NaN
-    if df['Ram'].dtype == object:
-        df['Ram'] = df['Ram'].str.replace('GB', '').astype(float)
-    if df['Weight'].dtype == object:
-        df['Weight'] = df['Weight'].str.replace('kg', '').astype(float)
+    # FIX LỖI: Bỏ lệnh if, ép qua chuỗi (str) rồi cắt bỏ chữ để máy nào cũng chạy được
+    df['Ram'] = df['Ram'].astype(str).str.replace('GB', '').astype(float)
+    df['Weight'] = df['Weight'].astype(str).str.replace('kg', '').astype(float)
 
     # Phân loại các nhóm biến
     categorical_cols = ['Company', 'TypeName', 'ScreenResolution', 'Cpu', 'Memory', 'Gpu', 'OpSys']
@@ -42,6 +39,5 @@ def clean_and_preprocess(df):
     scaler = StandardScaler()
     df_encoded[numeric_cols] = scaler.fit_transform(df_encoded[numeric_cols])
 
-    print(
-        f"[THÀNH CÔNG] Tiền xử lý hoàn tất! Kích thước dữ liệu mới: {df_encoded.shape[0]} dòng, {df_encoded.shape[1]} cột.")
+    print(f"[THÀNH CÔNG] Tiền xử lý hoàn tất! Kích thước dữ liệu mới: {df_encoded.shape[0]} dòng, {df_encoded.shape[1]} cột.")
     return df_encoded
