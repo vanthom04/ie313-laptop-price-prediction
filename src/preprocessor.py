@@ -11,14 +11,6 @@ def clean_data(df: pd.DataFrame, target = 'Price_euros') -> pd.DataFrame:
     cols_to_drop = ['laptop_ID', 'Product']
     df.drop(columns=[col for col in cols_to_drop if col in df.columns], errors='ignore', inplace=True)
 
-    # 2. Xóa ngoại lệ (Outliers) trên biến mục tiêu Price_euros
-    if target in df.columns:
-        q1 = df[target].quantile(0.25)
-        q3 = df[target].quantile(0.75)
-        iqr = q3 - q1
-        upper_bound = q3 + 1.5 * iqr
-        df = df[df[target] <= upper_bound]
-
     # 3. Chuẩn hóa dạng dữ liệu Ram và Weight
     df['Ram'] = df['Ram'].astype(str).str.replace('GB', '', regex=False).astype(float)
     df['Weight'] = df['Weight'].astype(str).str.replace('kg', '', regex=False).astype(float)
@@ -73,6 +65,20 @@ def clean_data(df: pd.DataFrame, target = 'Price_euros') -> pd.DataFrame:
     df.drop(columns=['Gpu'], inplace=True)
 
     print(f"[THÀNH CÔNG] Làm sạch dữ liệu hoàn tất! Kích thước: {df.shape[0]} dòng, {df.shape[1]} cột.")
+    return df
+
+def remove_outliner(df: pd.DataFrame, cols  : list) -> pd.DataFrame:
+    """Hàm xóa Outliner"""
+    # 2. Xóa ngoại lệ (Outliers)
+    for col in cols:
+        if col in df.columns:
+            q1 = df[col].quantile(0.25)
+            q3 = df[col].quantile(0.75)
+            iqr = q3 - q1
+            upper_bound = q3 + 1.5 * iqr
+            df = df[df[col] <= upper_bound]
+
+    print(f"[THÀNH CÔNG] Xóa ngoại lệ hoàn tất! Kích thước: {df.shape[0]} dòng, {df.shape[1]} cột.")
     return df
 
 
