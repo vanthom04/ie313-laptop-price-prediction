@@ -2,6 +2,7 @@
 Kiểm thử các hàm thống kê, phân tích tương quan, ANOVA và trực quan hóa trong src/eda.py.
 """
 
+import numpy as np
 import pandas as pd
 from scipy.stats._stats_py import F_onewayResult
 
@@ -45,10 +46,10 @@ def test_correlation(sample_clean_df: pd.DataFrame):
     assert isinstance(corr_matrix, pd.DataFrame)
     assert corr_matrix.shape == (len(num_cols), len(num_cols))
     # Đường chéo chính của các biến có phương sai khác 0 luôn bằng 1.0
-    for col in num_cols:
+    corr_array = corr_matrix.to_numpy()
+    for idx, col in enumerate(num_cols):
         if sample_clean_df[col].std() > 0:
-            corr_val = float(corr_matrix.loc[col, col])
-            assert round(corr_val, 2) == 1.0
+            assert np.isclose(corr_array[idx, idx], 1.0)
 
 
 def test_select_numberical_variable(sample_clean_df: pd.DataFrame):
