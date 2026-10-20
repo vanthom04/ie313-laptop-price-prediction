@@ -4,6 +4,7 @@ Kiểm thử các hàm làm sạch, xử lý ngoại lệ và tiền xử lý d�
 
 import numpy as np
 import pandas as pd
+import pandas.api.types as ptypes
 import pytest
 
 from src.config import TARGET_COL
@@ -45,11 +46,11 @@ def test_clean_data_transformation(sample_raw_df: pd.DataFrame):
         assert col in cleaned.columns
 
     # Kiểm tra kiểu dữ liệu chuẩn
-    assert np.issubdtype(cleaned["Ram"].dtype, np.integer)
-    assert np.issubdtype(cleaned["Weight"].dtype, np.floating)
-    assert np.issubdtype(cleaned["Cpu_Speed"].dtype, np.floating)
-    assert np.issubdtype(cleaned["Touchscreen"].dtype, np.integer)
-    assert np.issubdtype(cleaned["Ips"].dtype, np.integer)
+    assert ptypes.is_integer_dtype(cleaned["Ram"])
+    assert ptypes.is_float_dtype(cleaned["Weight"])
+    assert ptypes.is_float_dtype(cleaned["Cpu_Speed"])
+    assert ptypes.is_integer_dtype(cleaned["Touchscreen"])
+    assert ptypes.is_integer_dtype(cleaned["Ips"])
 
 
 def test_clean_data_missing_values_imputation(sample_raw_df: pd.DataFrame):

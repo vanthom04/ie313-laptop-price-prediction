@@ -47,7 +47,8 @@ def test_correlation(sample_clean_df: pd.DataFrame):
     # Đường chéo chính của các biến có phương sai khác 0 luôn bằng 1.0
     for col in num_cols:
         if sample_clean_df[col].std() > 0:
-            assert round(corr_matrix.loc[col, col], 2) == 1.0
+            corr_val = float(corr_matrix.loc[col, col])
+            assert round(corr_val, 2) == 1.0
 
 
 def test_select_numberical_variable(sample_clean_df: pd.DataFrame):
@@ -84,16 +85,16 @@ def test_eda_visualizations_execute_cleanly(sample_clean_df: pd.DataFrame):
     """Kiểm tra các hàm vẽ biểu đồ thực thi trơn tru mà không vấp lỗi."""
     num_cols, cat_cols = get_num_cat_var(sample_clean_df)
 
-    # 1. Box plot
+    # Box plot
     box_plot(x_axis="TypeName", y_axis=TARGET_COL, data=sample_clean_df)
     plot_single_boxplot(sample_clean_df, column=TARGET_COL)
 
-    # 2. Hist plot
+    # Hist plot
     hist_plot(x_axis="Ram", data=sample_clean_df)
 
-    # 3. ANOVA plot
+    # ANOVA plot
     plot_anova(sample_clean_df, series=cat_cols[:2], target=TARGET_COL)
 
-    # 4. Dashboard statistics
+    # Dashboard statistics
     numeric_var_statistic(sample_clean_df, numerical_cols=num_cols[:3])
     categorical_var_statistic(sample_clean_df, categorical_cols=cat_cols[:2])

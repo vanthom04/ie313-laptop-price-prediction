@@ -22,25 +22,25 @@ from src.preprocessor import clean_data, preprocess_data, remove_outliner
 
 def test_end_to_end_data_to_model_pipeline():
     """Kiểm thử toàn bộ chuỗi xử lý từ file dữ liệu thô đến kết quả huấn luyện mô hình."""
-    # 1. Đọc dữ liệu
+    # Đọc dữ liệu
     df_raw = load_data(RAW_DATA_PATH)
     assert df_raw is not None
     assert len(df_raw) > 1000
 
-    # 2. Làm sạch
+    # Làm sạch
     df_clean = clean_data(df_raw, target=TARGET_COL)
     assert df_clean.shape[0] == df_raw.shape[0]
 
-    # 3. Phân loại biến
+    # Phân loại biến
     numerical_cols, categorical_cols = get_num_cat_var(df_clean)
     assert len(numerical_cols) > 0
     assert len(categorical_cols) > 0
 
-    # 4. Lọc ngoại lệ
+    # Lọc ngoại lệ
     df_no_outlier = remove_outliner(df_clean, [TARGET_COL])
     assert len(df_no_outlier) <= len(df_clean)
 
-    # 5. Lọc biến có ý nghĩa
+    # Lọc biến có ý nghĩa
     num_selected = select_numberical_variable(
         df_no_outlier, series_name=numerical_cols, target=TARGET_COL, alpha=ALPHA_CORR
     )
@@ -50,7 +50,7 @@ def test_end_to_end_data_to_model_pipeline():
     assert len(num_selected) > 0
     assert len(cat_selected) > 0
 
-    # 6. Tiền xử lý (One-hot + Scaling)
+    # Tiền xử lý (One-hot + Scaling)
     df_preprocessed = preprocess_data(
         df_no_outlier,
         categorical_cols=cat_selected,
@@ -60,7 +60,7 @@ def test_end_to_end_data_to_model_pipeline():
     )
     assert TARGET_COL in df_preprocessed.columns
 
-    # 7. Huấn luyện mô hình
+    # Huấn luyện mô hình
     r2_train, r2_test = train_data_pipeline(df_preprocessed, degree=POLY_DEGREE, target=TARGET_COL)
 
     # Khẳng định chất lượng mô hình đạt ngưỡng chấp nhận được
