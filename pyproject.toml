@@ -21,7 +21,10 @@ dependencies = [
 ]
 
 [dependency-groups]
-dev = ["ruff>=0.16.9"]
+dev = [
+    "pytest>=9.1.1",
+    "ruff>=0.16.9",
+]
 
 [tool.uv]
 package = false
@@ -32,3 +35,11 @@ target-version = "py312"
 
 [tool.ruff.lint]
 select = ["E", "F", "I", "UP", "B"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
+filterwarnings = [
+    "ignore::DeprecationWarning",
+    "ignore::UserWarning",
+]
