@@ -15,3 +15,6 @@ wheels/
 
 # Office temporary lock files
 ~$*
+
+# Generated export outputs
+kde_out/
