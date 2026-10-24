@@ -24,7 +24,7 @@ REPORTS_IMG_DIR = REPORTS_DIR / "img"
 
 # Cấu hình hằng số cho Bài toán & Mô hình
 TARGET_COL = "Price_euros"  # Biến mục tiêu cần dự báo
-RANDOM_STATE = 42  # Cố định seed để kết quả đồng nhất giữa các lần chạy
+RANDOM_STATE = 0  # Cố định seed để kết quả đồng nhất giữa các lần chạy
 TEST_SIZE = 0.2  # Tỷ lệ chia tập Test (20%)
 POLY_DEGREE = 1  # Bậc đa thức cho PolynomialFeatures trong Pipeline
 ALPHA_CORR = 0.2  # Ngưỡng tương quan Pearson tối thiểu để lọc biến số

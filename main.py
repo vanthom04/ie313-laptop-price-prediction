@@ -32,7 +32,7 @@ from src.preprocessor import clean_data, preprocess_data, remove_outliner
 
 def run_pipeline():
     print("=" * 65)
-    print(" 🚀 HỆ THỐNG PHÂN TÍCH VÀ MÔ HÌNH DỰ ĐOÁN GIÁ LAPTOP CŨ (IE313)")
+    print(" 🚀 HỆ THỐNG PHÂN TÍCH VÀ MÔ HÌNH DỰ ĐOÁN GIÁ LAPTOP (IE313)")
     print("=" * 65)
 
     print("\n[1] ĐANG TẢI DỮ LIỆU THÔ...")
