@@ -18,3 +18,5 @@ wheels/
 
 # Generated export outputs
 kde_out/
+
+reports/

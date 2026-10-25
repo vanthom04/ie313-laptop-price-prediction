@@ -16,7 +16,7 @@
 Thị trường máy tính xách tay (Laptop) hiện nay vô cùng phong phú và phát triển mạnh mẽ với nhiều phân khúc cấu hình, công nghệ và mức giá khác nhau. Dự án này được nghiên cứu và triển khai nhằm mục tiêu:
 
 - **Phân tích khám phá (EDA) và kiểm định thống kê:** Xác định những yếu tố phần cứng then chốt (RAM, CPU, GPU, loại ổ cứng, kích thước màn hình, độ phân giải, thương hiệu...) có tác động mang ý nghĩa thống kê đến giá bán (`Price_euros`).
-- **Xây dựng Pipeline học máy tự động hóa hoàn chỉnh:** Từ khâu Nạp dữ liệu  $\rightarrow$ Tiền xử lý & Trích xuất đặc trưng $\rightarrow$ Xử lý ngoại lệ (IQR) $\rightarrow$ Chọn lọc đặc trưng (Pearson & One-way ANOVA) $\rightarrow$ Chuẩn hóa & Mã hóa One-Hot $\rightarrow$ Huấn luyện và Đánh giá Mô hình Hồi quy Pipeline.
+- **Xây dựng Pipeline học máy tự động hóa hoàn chỉnh:** Từ khâu Nạp dữ liệu $\rightarrow$ Tiền xử lý & Trích xuất đặc trưng $\rightarrow$ Xử lý ngoại lệ (IQR) $\rightarrow$ Chọn lọc đặc trưng (Pearson & One-way ANOVA) $\rightarrow$ Chuẩn hóa & Mã hóa One-Hot $\rightarrow$ Huấn luyện và Đánh giá Mô hình Hồi quy Pipeline.
 
 ---
 
@@ -135,7 +135,7 @@ flowchart TD
     D --> E["4. Lọc đặc trưng thống kê<br>Pearson |r| > 0.2 & ANOVA p < 0.05"]
     E --> F["5. Chuẩn hóa & Mã hóa (preprocess_data)<br>Z-score (StandardScaler) & One-Hot Encoding"]
     F --> G["6. Huấn luyện Mô hình Pipeline (Scikit-Learn)<br>StandardScaler → PolyFeatures (Degree=1) → LinearRegression"]
-    G --> H["7. Đánh giá & Dự báo<br>R² train ≈ 0.797 | R² test ≈ 0.773"]
+    G --> H["7. Đánh giá & Dự báo<br>R² train = 0.7968093656804662 | R² test = 0.772454337828808"]
 ```
 
 ### Chi tiết các bước thực hiện:
@@ -181,8 +181,8 @@ flowchart TD
    - Xây dựng Scikit-Learn Pipeline: `StandardScaler` $\rightarrow$ `PolynomialFeatures` $\rightarrow$ `LinearRegression`.
    - Chia tập dữ liệu Train/Test theo tỷ lệ 80:20 (`test_size=0.2`, `random_state=0`).
    - Đánh giá hiệu năng:
-     - **Bậc 1 (Tuyến tính):** $R^2_{\text{train}} \approx 0.7968$, $R^2_{\text{test}} \approx 0.7725$, chênh lệch chỉ $0.0244$ $\rightarrow$ **Mô hình tối ưu nhất, không bị overfitting**.
-     - **Bậc 2 & Bậc 3:** $R^2_{\text{test}}$ giảm sút nghiêm trọng ($0.4730$ ở bậc 2 và $< 0$ ở bậc 3) do hiện tượng bùng nổ số chiều gây overfitting nặng.
+     - **Bậc 1 (Tuyến tính):** $R^2_{\text{train}} = 0.7968093656804662$, $R^2_{\text{test}} = 0.772454337828808$, chênh lệch chỉ $0.0243550278516582$ $\rightarrow$ **Mô hình tối ưu nhất, không bị overfitting**.
+     - **Bậc 2 & Bậc 3:** $R^2_{\text{test}}$ giảm sút nghiêm trọng ($R^2_{\text{train}} = 0.8946119516353919$, $R^2_{\text{test}} = 0.47298634767100345$ ở bậc 2 và $R^2_{\text{train}} = 0.9576411409159866$, $R^2_{\text{test}} = -64.06477441419302$ ở bậc 3) do hiện tượng bùng nổ số chiều gây overfitting nặng.
 
 ---
 
@@ -200,11 +200,11 @@ flowchart TD
 
 ## 👥 7. Phân công Nhiệm vụ (Team Members)
 
-|  STT  | Họ và tên         |   MSSV   | Email                     | Vai trò & Trách nhiệm chính                                                                                                                                                                |
-| :---: | :---------------- | :------: | :------------------------ | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **1** | **Chu Văn Thơm**  | 25410314 | vanthom04.dev@gmail.com   | Setup project và quản lý môi trường `uv`, cấu hình `src/config.py`, `main.py`, thiết kế `demo.ipynb`, xây dựng hệ thống 40 bài tests tự động, tổng hợp Báo cáo Word và Slide thuyết trình. |
-| **2** | **Trần Ngọc Tâm** | 25410300 | tranngoctam13a@gmail.com  | Tải và chuẩn bị dữ liệu thô từ Kaggle, phát triển `src/data_loader.py`, `src/preprocessor.py`, biên soạn nội dung phần Dữ liệu & Tiền xử lý trong Báo cáo/Slide.                           |
-| **3** | **Hồ Thiên Phúc** | 25410284 | hothienphuc1999@gmail.com | Phát triển `src/eda.py`, `src/model_pipeline.py` (Kiểm định ANOVA, Tương quan Pearson, Scikit-Learn Pipeline), biên soạn nội dung EDA & Mô hình hóa.                                       |
+|  STT  | Họ và tên         |   MSSV   | Email                     | Vai trò & Trách nhiệm chính                                                                                                                                                                                    |
+| :---: | :---------------- | :------: | :------------------------ | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **1** | **Chu Văn Thơm**  | 25410314 | vanthom04.dev@gmail.com   | Setup project và quản lý môi trường uv, cấu hình src/config.py, main.py, thiết kế demo.ipynb, viết 40 bài tests tự động, tổng hợp Báo cáo Word và Slide, thuyết trình phần S1 – S4.               |
+| **2** | **Trần Ngọc Tâm** | 25410300 | tranngoctam13a@gmail.com  | Tải và chuẩn bị dữ liệu thô từ Kaggle, phát triển src/data_loader.py, src/preprocessor.py, biên soạn nội dung phần Dữ liệu & Tiền xử lý trong Báo cáo/Slide, thuyết trình phần S5 – S11.                       |
+| **3** | **Hồ Thiên Phúc** | 25410284 | hothienphuc1999@gmail.com | Phát triển src/eda.py, src model_pipeline.py (Kiểm định ANOVA, Tương quan Pearson, Scikit-Learn Pipeline), biên soạn nội dung EDA & Mô hình hóa trong Báo cáo/Slide, thuyết trình phần S12 – S18 và Demo code. |
 
 ---
 
